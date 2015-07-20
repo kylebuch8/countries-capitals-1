@@ -70,6 +70,7 @@ function countriesService($http, $filter) {
 	}
 
 	function neighborsSuccess(response) {
+		countriesService.currentCountry.neighbors = response.data.geonames;
 		return response.data.geonames;
 	}
 
@@ -79,6 +80,7 @@ function countriesService($http, $filter) {
 	}
 
 	function capitalSuccess(response) {
+		countriesService.currentCountry.capital = response.data.geonames[0];
 		return response.data.geonames[0];
 	}
 

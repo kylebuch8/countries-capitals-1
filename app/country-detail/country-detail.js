@@ -8,23 +8,36 @@ function config($routeProvider) {
 		templateUrl: 'country-detail/country-detail.html',
 		controller: DetailCtrl,
 		resolve: {
-			country: function(countriesService, $route) {
-				return countriesService.getCountry($route.current.params.country);
-			},
-			capital: function($route, countriesService) {
-				return countriesService.getCapital($route.current.params.capital);
-			},
-			neighbors: function($route, countriesService) {
-				console.log('country: ' + countriesService.currentCountry);
-				return countriesService.getNeighbors(countriesService.currentCountry.countryCode);
-			},
+			detail: ['countriesService', '$route', function (countriesService, $route) {
+				return countriesService.getCountries()
+					.then(function () {
+						return countriesService.getCountry($route.current.params.country);
+					})
+					.then(function () {
+						return countriesService.getCapital($route.current.params.capital);
+					})
+					.then(function () {
+						return countriesService.getNeighbors(countriesService.currentCountry.countryCode);
+					});
+			}]
+			// },
+			// country: function(countriesService, $route) {
+			// 	return countriesService.getCountry($route.current.params.country);
+			// },
+			// capital: function($route, countriesService) {
+			// 	return countriesService.getCapital($route.current.params.capital);
+			// },
+			// neighbors: function($route, countriesService) {
+			// 	console.log('country: ' + countriesService.currentCountry);
+			// 	return countriesService.getNeighbors(countriesService.currentCountry.countryCode);
+			// },
 		}
-	})
+	});
 }
 
 /*countryController.$inject = [''];*/
-function DetailCtrl($scope, capital, country, neighbors) {
+function DetailCtrl($scope, countriesService) {
 	$scope.country = countriesService.currentCountry;
-	$scope.capital = capital;
-	$scope.neighbors = neighbors;
+	// $scope.capital = capital;
+	// $scope.neighbors = neighbors;
 }
