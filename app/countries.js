@@ -1,8 +1,8 @@
 angular.module('countries',[])
 	.factory('countriesService', countriesService);
 
-countriesService.$inject = ['$http','$filter'];
-function countriesService($http, $filter) {
+countriesService.$inject = ['$http','$filter','$q'];
+function countriesService($http, $filter, $q) {
 	var countriesService = {
 			countries: countries,
 			currentCountry: currentCountry,
@@ -25,6 +25,8 @@ function countriesService($http, $filter) {
 	}
 
 	function getCountries() {
+		var deferred = $q.defer();
+
 		if (!countriesService.countries) {
 			var request = $http({
 				url: 'http://api.geonames.org/countryInfo',
@@ -36,11 +38,13 @@ function countriesService($http, $filter) {
 				}
 			}),
 			response = request.then(countriesSuccess,countriesError);
+			deferred.resolve(response);
 		} else {
 			response = countriesService.countries;
+			deferred.resolve(response);
 		};
 
-		return response;
+		return deferred.promise;
 	}
 
 	function getCapital(capital) {
@@ -80,7 +84,8 @@ function countriesService($http, $filter) {
 	}
 
 	function capitalSuccess(response) {
-		countriesService.currentCountry.capital = response.data.geonames[0];
+		countriesService.currentCountry.capital = response.data.geonames[0].name;
+		countriesService.currentCountry.capitalPopulation = response.data.geonames[0].population;
 		return response.data.geonames[0];
 	}
 

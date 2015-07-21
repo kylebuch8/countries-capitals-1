@@ -12,5 +12,5 @@ function config($routeProvider) {
 };
 
 function HomeCtrl() {
-	
+
 }

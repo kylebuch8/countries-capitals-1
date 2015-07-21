@@ -2,12 +2,12 @@
 <div class="country-detail">
 	<strong>Population of country</strong>: {{country.population | number}}<br>
 	<strong>Area</strong>: {{country.areaInSqKm | number}}<br>
-	<strong>Capital</strong>: {{country.capital.name}}<br>
-	<strong>Population of Capital</strong>: {{country.capital.population | number}}<br>
+	<strong>Capital</strong>: {{country.capital}}<br>
+	<strong>Population of Capital</strong>: {{country.capitalPopulation | number}}<br>
 	<strong>{{country.neighbors.length}} Neighbors</strong>:
 	<span ng-repeat="n in country.neighbors">
 		<a ng-href="#/countries/{{n.countryName | lowercase}}/{{n.capital}}">
-			{{n.countryName}},
+			{{n.countryName}}<span ng-show="!$last">,</span>
 		</a>
 	</span>
 </div>
