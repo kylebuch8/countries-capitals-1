@@ -2,7 +2,6 @@ angular.module('countries', [])
     .factory('countriesService', countriesService);
 
 countriesService.$inject = ['$http', '$filter', '$q'];
-
 function countriesService($http, $filter, $q) {
 	var countriesService = {
 			countries: countries,
@@ -81,7 +80,7 @@ function countriesService($http, $filter, $q) {
 			});
 
 			deferred.resolve(request.then(capitalSuccess, promiseError));
-		}
+		};
 
 		return deferred.promise;
 	}
@@ -120,7 +119,7 @@ function countriesService($http, $filter, $q) {
 	}
 
 	function getCountry(countryName) {
-		countriesService.currentCountry = searchArray(countriesService.countries, countryName);
+		countriesService.currentCountry = searchArray(countriesService.countries, countryName)
 		return countriesService.currentCountry;
 	}
 

@@ -6,7 +6,7 @@ config.$inject = ["$routeProvider"];
 function config($routeProvider) {
 	$routeProvider.when('/countries', {
 		templateUrl: 'countries-list/countries-list.html',
-		controller: 'CountriesCtrl',
+		controller: CountriesCtrl,
 		resolve: {
 			countries: function(countriesService) {
 				return countriesService.getCountries();

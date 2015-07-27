@@ -5,6 +5,8 @@ var ghpages = require('gulp-gh-pages');
 var concat = require('gulp-concat');
 var imagemin = require('gulp-imagemin');
 var pngquant = require('imagemin-pngquant');
+var uglify = require('gulp-uglify');
+var ngmin = require('gulp-ngmin');
 
 gulp.task('sass', function () {
     gulp.src('app/assets/sass/**/*')
@@ -31,15 +33,22 @@ gulp.task('imagemin', function () {
         .pipe(gulp.dest('images/build'));
 });
 
-/*var files = ['app/app.js',
+var files = ['app/assets/**/*',
+            'app/countries-list/*',
+            'app/country-detail/*',
+            'app/home/*',
             'app/bower_components/angular/angular.min.js',
+            'app/bower_components/angular-route/angular-route.min.js',
             'app/bower_components/angular-animate/angular-animate.min.js',
-            'app/index.html'];
+            'app/index.html',
+            'app/app.js',
+            'app/countries.js'
+            ];
 
 gulp.task('build', function() {
-    return gulp.src(files,{base:'./'})
+    return gulp.src(files,{base:'./app'})
     .pipe(gulp.dest('./build'));
-});*/
+});
 
 gulp.task('deploy', ['build'],function() {
     return gulp.src('./build/**/*').pipe(ghpages());
